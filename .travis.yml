@@ -1,0 +1,32 @@
+---
+
+language: python
+sudo: required
+dist: xenial
+addons:
+  apt:
+    packages:
+    - software-properties-common
+    - python-pip
+
+before_install:
+  - sudo apt-add-repository -y ppa:ansible/ansible
+
+install:
+  - sudo apt-get install -y ansible
+  - sudo ansible-galaxy install deekayen.ping
+  - pip install ansible-lint
+  - pip install ansible-review
+
+before_script:
+  - ansible --version
+  - ansible-lint --version
+  - ansible-review --version
+
+script:
+  - git ls-files | grep -Ei '^[^[:punct:]].+.(yaml|yml)$' | xargs ansible-lint
+  - git ls-files | grep -Ei '^[^[:punct:]].+.(yaml|yml)$' | xargs ansible-review -q
+  - ansible-playbook -i tests/inventory tests/test.yml
+
+notifications:
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/

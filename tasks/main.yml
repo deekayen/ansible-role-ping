@@ -1,0 +1,51 @@
+---
+
+- name: Install firewalld.
+  package:
+    name: firewalld
+  register: firewalld_install
+
+- debug:
+    var: firewalld_install
+    verbosity: 3
+
+- debug:
+    var: ping_enable
+    verbosity: 3
+
+- debug:
+    var: ping_types
+    verbosity: 3
+
+- name: Set ICMP rules in firewalld.
+  firewalld:
+    zone: "{{ ping_zone }}"
+    state: "{{ ping_enable | bool | ternary ('enabled', 'disabled') }}"
+    permanent: yes
+    source: "{{ ping_source }}"
+    icmp_block: "{{ item }}"
+  loop: "{{ ping_types | flatten(levels=1) }}"
+  notify: reload firewalld
+
+- name: Set ICMP echo in sysctl.
+  sysctl:
+    name: net.ipv4.icmp_echo_ignore_all
+    sysctl_set: yes
+    value: "{{ ping_enable | bool | ternary ('0', '1') | int }}"
+    state: present
+
+- name: Set ICMP broadcasts in sysctl.
+  sysctl:
+    name: net.ipv4.icmp_echo_ignore_broadcasts
+    sysctl_set: yes
+    value: "{{ ping_enable | bool | ternary ('0', '1') | int }}"
+    state: present
+
+- name: Allow traceroute UDP ports.
+  firewalld:
+    zone: "{{ ping_zone }}"
+    port: 33434-33534/udp
+    permanent: yes
+    source: "{{ ping_source }}"
+    state: "{{ ping_enable | bool | ternary ('enabled', 'disabled') }}"
+  notify: reload firewalld

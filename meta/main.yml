@@ -1,0 +1,23 @@
+---
+
+galaxy_info:
+  author: David Norman
+  description: Manage ping (echo-request) or other diagnostic traffic.
+
+  issue_tracker_url: https://github.com/deekayen/ansible-role-ping/issues
+  license: BSD-3-Clause
+  min_ansible_version: 2.8
+
+  platforms:
+    - name: Ubuntu
+      versions:
+        - 16.04
+    - name: EL
+      versions:
+        - 7
+
+  galaxy_tags:
+    - diagnostic
+    - firewalld
+
+dependencies: []
