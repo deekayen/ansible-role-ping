@@ -1,6 +1,8 @@
 Ping and Traceroute
 =============
 
+[![Build Status](https://travis-ci.org/deekayen/ansible-role-ping.svg?branch=master)](https://travis-ci.org/deekayen/ansible-role-ping)
+
 Install the firewalld service, then override the default-deny firewall configurations to allow ping (echo-request) or other diagnostic traceroute traffic.
 
 Requirements
