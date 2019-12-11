@@ -27,7 +27,7 @@ before_script:
 script:
   - git ls-files | grep -Ei '^[^[:punct:]].+.(yaml|yml)$' | xargs ansible-lint
   - git ls-files | grep -Ei '^[^[:punct:]].+.(yaml|yml)$' | xargs ansible-review -q
-  - ansible-playbook -i tests/inventory tests/test.yml
+  - sudo ansible-playbook -i tests/inventory tests/test.yml
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
