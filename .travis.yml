@@ -17,7 +17,7 @@ install:
   - pip3 install ansible
   - pip3 install ansible-lint
   - pip3 install ansible-review
-  - ansible-galaxy install --force git+https://github.com/deekayen/ansible-role-ping.git,${TRAVIS_COMMIT}
+  - ansible-galaxy install --force -r tests/requirements.yml
 
 before_script:
   - whereis pip
