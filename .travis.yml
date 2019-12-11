@@ -1,32 +1,37 @@
 ---
 
-language: python
-dist: bionic
-addons:
-  apt:
-    packages:
-    - software-properties-common
-    - python-pip
-
-before_install:
-  - sudo apt-add-repository -y ppa:ansible/ansible
+matrix:
+  include:
+    - os: linux
+      sudo: false
+      python: 3.6
+      language: python
+      dist: xenial
+    - os: linux
+      sudo: false
+      python: 3.7
+      language: python
+      dist: bionic
 
 install:
-  - sudo apt-get install -y ansible
-  - sudo ansible-galaxy install --force -r tests/requirements.yml
-  - pip install ansible-lint
-  - pip install ansible-review
+  - pip3 install ansible
+  - pip3 install ansible-lint
+  - pip3 install ansible-review
+  - ansible-galaxy install --force git+https://github.com/deekayen/ansible-role-ping.git,${TRAVIS_COMMIT}
 
 before_script:
+  - whereis pip
+  - whereis pip3
+  - pip3 -V
   - ansible --version
-  - ansible-galaxy --version
-  - ansible-lint --version
   - ansible-review --version
+  - git --version
+  - python --version
 
 script:
-  - git ls-files | grep -Ei '^[^[:punct:]].+.(yaml|yml)$' | xargs ansible-lint
+  - ansible-lint --exclude=/home/travis/.ansible .
   - git ls-files | grep -Ei '^[^[:punct:]].+.(yaml|yml)$' | xargs ansible-review -q
-  - ansible-playbook -i tests/inventory tests/test.yml
+  - ansible-playbook --syntax-check -i localhost, -c local tests/test.yml
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
