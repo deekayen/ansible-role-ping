@@ -1,7 +1,6 @@
 ---
 
 language: python
-sudo: required
 dist: bionic
 addons:
   apt:
@@ -27,7 +26,7 @@ before_script:
 script:
   - git ls-files | grep -Ei '^[^[:punct:]].+.(yaml|yml)$' | xargs ansible-lint
   - git ls-files | grep -Ei '^[^[:punct:]].+.(yaml|yml)$' | xargs ansible-review -q
-  - sudo ansible-playbook -i tests/inventory tests/test.yml
+  - ansible-playbook -i tests/inventory tests/test.yml
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
