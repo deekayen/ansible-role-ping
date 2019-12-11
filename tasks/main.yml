@@ -17,10 +17,6 @@
     var: firewalld_install
     verbosity: 3
 
-- name: Install firewalld module for python.
-  pip:
-    name: firewalld
-
 - name: Set ICMP rules in firewalld.
   firewalld:
     zone: "{{ ping_zone }}"
