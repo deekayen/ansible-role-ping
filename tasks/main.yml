@@ -5,6 +5,10 @@
     name: firewalld
   register: firewalld_install
 
+- name: Install firewalld module for python.
+  pip:
+    name: firewalld
+
 - debug:
     var: firewalld_install
     verbosity: 3
