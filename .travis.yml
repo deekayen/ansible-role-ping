@@ -16,7 +16,6 @@ matrix:
 install:
   - pip3 install ansible
   - pip3 install ansible-lint
-  - pip3 install ansible-review
   - ansible-galaxy install --force -r tests/requirements.yml
 
 before_script:
@@ -24,13 +23,11 @@ before_script:
   - whereis pip3
   - pip3 -V
   - ansible --version
-  - ansible-review --version
   - git --version
   - python --version
 
 script:
   - ansible-lint --exclude=/home/travis/.ansible .
-  - git ls-files | grep -Ei '^[^[:punct:]].+.(yaml|yml)$' | xargs ansible-review -q
   - ansible-playbook --syntax-check -i localhost, -c local tests/test.yml
 
 notifications:
