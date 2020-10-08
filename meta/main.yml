@@ -5,8 +5,10 @@ galaxy_info:
   author: David Norman
   description: Manage ping (echo-request) or other diagnostic traffic.
 
+  github_branch: main
   issue_tracker_url: https://github.com/deekayen/ansible-role-ping/issues
   license: BSD-3-Clause
+
   min_ansible_version: 2.8
 
   platforms:
