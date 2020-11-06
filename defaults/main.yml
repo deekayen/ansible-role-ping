@@ -3,5 +3,5 @@
 ping_enable: yes
 ping_source: 0.0.0.0/0
 ping_types:
-- echo-request
+  - echo-request
 ping_zone: public
