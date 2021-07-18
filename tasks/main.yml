@@ -1,21 +1,9 @@
 ---
 
-- debug:
-    var: ping_enable
-    verbosity: 3
-
-- debug:
-    var: ping_types
-    verbosity: 3
-
 - name: Install firewalld.
   package:
     name: firewalld
   register: firewalld_install
-
-- debug:
-    var: firewalld_install
-    verbosity: 3
 
 - name: Set ICMP rules in firewalld.
   firewalld:
