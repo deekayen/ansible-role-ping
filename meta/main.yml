@@ -2,6 +2,7 @@
 
 galaxy_info:
   role_name: ping
+  namespace: deekayen
   author: David Norman
   description: Manage ping (echo-request) or other diagnostic traffic.
 
